@@ -1,8 +1,9 @@
 version: "3"
 
 volumes:
-    mysql_data:
-    redis_data:
+  mysql_data:
+  redis_data:
+
 
 services:
   mysql:
@@ -15,9 +16,10 @@ services:
       MYSQL_PASSWORD: 123456
       TZ: Asia/Shanghai
     ports:
-        - "3336:3306"
+      - "3336:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./internal/data/seed:/docker-entrypoint-initdb.d
 
   redis:
     image: redis:alpine3.21
