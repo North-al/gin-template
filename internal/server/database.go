@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/North-al/go-gateway/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -13,7 +14,16 @@ var (
 )
 
 func InitDB() {
-	dsn := "root:123456@tcp(127.0.0.1:3336)/gateway?charset=utf8mb4&parseTime=True&loc=Local"
+	dbConfig := config.GetConfig().Database
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbConfig.Username,
+		dbConfig.Password,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.DBName,
+	)
+
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:               dsn,
 		DefaultStringSize: 256,
