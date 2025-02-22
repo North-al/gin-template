@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/North-al/go-gateway/config"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -12,10 +13,11 @@ var (
 )
 
 func InitRedis() {
+	dbConfig := config.GetConfig().Redis
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6399",
-		Password: "",
-		DB:       0,
+		Addr:     fmt.Sprintf("%s:%d", dbConfig.Host, dbConfig.Port),
+		Password: dbConfig.Password,
+		DB:       dbConfig.Database,
 	})
 
 	// 创建一个上下文对象

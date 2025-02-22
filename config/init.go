@@ -37,6 +37,7 @@ type Redis struct {
 	Host     string `yaml:"host"`
 	Port     int    `yaml:"port"`
 	Password string `yaml:"password"`
+	Database int    `yaml:"database"`
 }
 
 type JWT struct {
