@@ -1,6 +1,6 @@
-# Go-Gateway
+# gin-template
 
-Go-Gateway 是一个基于 `Go + Gin` 构建的高性能 API 网关，采用 **整洁架构（Clean Architecture）** 设计，支持 **多环境配置、数据库迁移、日志管理、中间件扩展** 等功能，适用于微服务架构。
+gin-template 是一个基于 `Go + Gin` 编写的gin模板，采用 **整洁架构（Clean Architecture）** 设计，支持 **多环境配置、数据库迁移、日志管理、中间件扩展** 等功能。
 
 ## 🚀 项目架构
 
