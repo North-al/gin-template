@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/North-al/go-gateway/config"
+	"github.com/North-al/go-gateway/internal/pkg/logger"
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -51,4 +53,6 @@ func InitDB() {
 	}
 
 	DB = db
+
+	logger.Info("数据库连接成功", zap.String("dsn", dsn))
 }
