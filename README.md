@@ -43,8 +43,8 @@ GO-GATEWAY
 
 ### **1️⃣ 克隆项目**
 ```bash
-git clone https://github.com/yourname/go-gateway.git
-cd go-gateway
+git clone https://github.com/North-al/gin-template.git
+cd gin-template
 ```
 
 ### 2️⃣ 配置环境
