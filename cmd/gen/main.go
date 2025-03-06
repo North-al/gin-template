@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	
+
 	"github.com/North-al/gin-template/config"
 	"github.com/North-al/gin-template/internal/biz/repository"
 	"github.com/North-al/gin-template/internal/data/models"
@@ -17,9 +17,9 @@ func main() {
 		OutPath: "internal/data/query",
 		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface,
 	})
-	
+
 	dbConfig := config.GetConfig().Database
-	
+
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		dbConfig.Username,
 		dbConfig.Password,
@@ -27,7 +27,7 @@ func main() {
 		dbConfig.Port,
 		dbConfig.DBName,
 	)
-	
+
 	gormDB, _ := gorm.Open(mysql.New(mysql.Config{
 		DSN:               dsn,
 		DefaultStringSize: 256,
@@ -36,14 +36,14 @@ func main() {
 			TablePrefix: "t_", // 设置表名前缀
 		},
 	})
-	
+
 	g.UseDB(gormDB)
-	
+
 	g.ApplyBasic(models.User{})
-	
-	g.ApplyInterface(func(repository.UserRepository) {}, models.User{})
+
+	g.ApplyInterface(func(repository.UserRepositoryGen) {}, models.User{})
 	// g.ApplyInterface(func(repository.RoleRepository) {}, model.Role{})
 	// g.ApplyInterface(func(repository.DepartmentRepository) {}, model.Department{})
-	
+
 	g.Execute()
 }
