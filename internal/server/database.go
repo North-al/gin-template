@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/North-al/go-gateway/config"
-	"github.com/North-al/go-gateway/internal/pkg/logger"
+	"github.com/North-al/gin-template/config"
+	"github.com/North-al/gin-template/internal/pkg/logger"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

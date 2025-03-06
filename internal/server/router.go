@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/North-al/go-gateway/internal/biz/service"
-	"github.com/North-al/go-gateway/internal/data/repository"
-	"github.com/North-al/go-gateway/internal/handler"
-	"github.com/North-al/go-gateway/internal/pkg/utils"
+	"github.com/North-al/gin-template/internal/biz/service"
+	"github.com/North-al/gin-template/internal/data/repository"
+	"github.com/North-al/gin-template/internal/handler"
+	"github.com/North-al/gin-template/internal/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/North-al/go-gateway/config"
+	"github.com/North-al/gin-template/config"
 	"github.com/redis/go-redis/v9"
 )
 

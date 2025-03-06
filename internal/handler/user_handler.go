@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/North-al/go-gateway/internal/biz/entity"
-	"github.com/North-al/go-gateway/internal/biz/service"
+	"github.com/North-al/gin-template/internal/biz/entity"
+	"github.com/North-al/gin-template/internal/biz/service"
 	"github.com/gin-gonic/gin"
 )
 

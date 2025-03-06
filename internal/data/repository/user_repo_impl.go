@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/North-al/go-gateway/internal/biz/entity"
-	"github.com/North-al/go-gateway/internal/biz/repository"
+	"github.com/North-al/gin-template/internal/biz/entity"
+	"github.com/North-al/gin-template/internal/biz/repository"
 	"gorm.io/gorm"
 )
 

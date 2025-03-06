@@ -14,7 +14,7 @@ gin-template 是一个基于 `Go + Gin` 编写的gin模板，采用 **整洁架�
 
 ## 📂 目录结构
 ```plaintext
-GO-GATEWAY
+GIN-TEMPLATE
 ├── api/                # API 定义（如 Protobuf 文件）
 ├── cmd/                # 应用入口（Main 目录）
 ├── config/             # 配置文件

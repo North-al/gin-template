@@ -1,4 +1,4 @@
-module github.com/North-al/go-gateway
+module github.com/North-al/gin-template
 
 go 1.23.0
 

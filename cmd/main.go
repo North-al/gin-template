@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/North-al/go-gateway/internal/pkg/logger"
-	"github.com/North-al/go-gateway/internal/server"
+	"github.com/North-al/gin-template/internal/pkg/logger"
+	"github.com/North-al/gin-template/internal/server"
 )
 
 func main() {
