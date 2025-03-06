@@ -19,7 +19,7 @@ services:
       - "3336:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./internal/data/seed:/docker-entrypoint-initdb.d
+      # - ./internal/data/seed:/docker-entrypoint-initdb.d
 
   redis:
     image: redis:alpine3.21

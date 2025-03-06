@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/North-al/gin-template/internal/biz/entity"
 	"github.com/North-al/gin-template/internal/biz/repository"
@@ -61,20 +62,25 @@ func (s *AuthService) Register(ctx context.Context, req entity.RegisterRequest) 
 
 func (s *AuthService) Login(ctx context.Context, req entity.LoginRequest) (string, error) {
 	user, err := s.userRepo.FindByPhone(ctx, req.Phone)
+	fmt.Println(req)
 	if err != nil {
 		return "", errors.New("用户名或密码错误")
 	}
 
 	if req.Type == "code" {
+		fmt.Println("code")
 		if req.Captcha != "000000" {
 			return "", errors.New("验证码错误")
 		}
 	} else if req.Type == "password" {
 		// 密码校验
+		fmt.Println("password")
 		err = utils.VerifyPassword(req.Password, user.Password)
+
 		if err != nil {
 			return "", errors.New("用户名或密码错误")
 		}
+
 	} else {
 		return "", errors.New("异常登录类型")
 	}

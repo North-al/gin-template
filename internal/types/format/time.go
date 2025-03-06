@@ -2,35 +2,53 @@ package format
 
 import (
 	"database/sql/driver"
-	"encoding/json"
 	"fmt"
 	"time"
 )
 
-type LocalTime struct {
-	time.Time
+type LocalTime time.Time
+
+const timeFormat = "2006-01-02 15:04:05"
+const timezone = "Asia/Shanghai"
+
+func (t LocalTime) MarshalJSON() ([]byte, error) {
+	b := make([]byte, 0, len(timeFormat)+2)
+	b = append(b, '"')
+	b = time.Time(t).AppendFormat(b, timeFormat)
+	b = append(b, '"')
+	return b, nil
 }
 
-// `Scan` 处理数据库读取
-func (t *LocalTime) Scan(value interface{}) error {
-	if value == nil {
-		*t = LocalTime{Time: time.Time{}}
+func (t *LocalTime) UnmarshalJSON(data []byte) (err error) {
+	loc, _ := time.LoadLocation(timezone)
+	now, err := time.ParseInLocation(`"`+timeFormat+`"`, string(data), loc)
+	*t = LocalTime(now)
+	return
+}
+
+func (t LocalTime) String() string {
+	return time.Time(t).Format(timeFormat)
+}
+
+func (t LocalTime) local() time.Time {
+	loc, _ := time.LoadLocation(timezone)
+	return time.Time(t).In(loc)
+}
+
+func (t LocalTime) Value() (driver.Value, error) {
+	var zeroTime time.Time
+	var ti = time.Time(t)
+	if ti.UnixNano() == zeroTime.UnixNano() {
+		return nil, nil
+	}
+	return ti, nil
+}
+
+func (t *LocalTime) Scan(v interface{}) error {
+	value, ok := v.(time.Time)
+	if ok {
+		*t = LocalTime(value)
 		return nil
 	}
-	v, ok := value.(time.Time)
-	if !ok {
-		return fmt.Errorf("cannot convert %v to LocalTime", value)
-	}
-	*t = LocalTime{Time: v}
-	return nil
-}
-
-// `Value` 处理存入数据库的时间格式
-func (t LocalTime) Value() (driver.Value, error) {
-	return t.Format("2006-01-02 15:04:05"), nil
-}
-
-// `MarshalJSON` 控制 JSON 序列化格式
-func (t LocalTime) MarshalJSON() ([]byte, error) {
-	return json.Marshal(t.Format("2006-01-02 15:04:05"))
+	return fmt.Errorf("can not convert %v to timestamp", v)
 }
