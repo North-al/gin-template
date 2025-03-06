@@ -2,35 +2,35 @@ package format
 
 import (
 	"database/sql/driver"
+	"encoding/json"
 	"fmt"
 	"time"
 )
 
-type LocalTime time.Time
-
-// MarshalJSON formats the LocalTime to a JSON string.
-func (t LocalTime) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("\"%s\"", time.Time(t).Format("2006-01-02 15:04:05"))), nil
+type LocalTime struct {
+	time.Time
 }
 
-// Value implements the driver.Valuer interface for writing LocalTime to the database.
-func (t LocalTime) Value() (driver.Value, error) {
-	if t.IsZero() {
-		return nil, nil
-	}
-	return time.Time(t), nil
-}
-
-// Scan implements the sql.Scanner interface for reading LocalTime from the database.
-func (t LocalTime) Scan(v interface{}) error {
-	if value, ok := v.(time.Time); ok {
-		t = LocalTime(value)
+// `Scan` 处理数据库读取
+func (t *LocalTime) Scan(value interface{}) error {
+	if value == nil {
+		*t = LocalTime{Time: time.Time{}}
 		return nil
 	}
-	return fmt.Errorf("cannot convert %v to timestamp", v)
+	v, ok := value.(time.Time)
+	if !ok {
+		return fmt.Errorf("cannot convert %v to LocalTime", value)
+	}
+	*t = LocalTime{Time: v}
+	return nil
 }
 
-// IsZero checks if the LocalTime is the zero value.
-func (t LocalTime) IsZero() bool {
-	return time.Time(t).IsZero()
+// `Value` 处理存入数据库的时间格式
+func (t LocalTime) Value() (driver.Value, error) {
+	return t.Format("2006-01-02 15:04:05"), nil
+}
+
+// `MarshalJSON` 控制 JSON 序列化格式
+func (t LocalTime) MarshalJSON() ([]byte, error) {
+	return json.Marshal(t.Format("2006-01-02 15:04:05"))
 }
