@@ -27,3 +27,12 @@ go.work.sum
 .idea
 logs/
 logs/*.log
+
+tmp
+
+docs/**/*
+
+config/prod/config.yml
+
+docker-build/
+uploads

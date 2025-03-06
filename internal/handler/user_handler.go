@@ -16,17 +16,17 @@ func NewUserHandler(userService *service.UserService) *UserHandler {
 
 func (h *UserHandler) Create(c *gin.Context) {
 	var req entity.UserEntity
-
+	
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	user, err := h.userService.Create(&req)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{"user": user})
+	
+	// user, err := h.userService.Create(&req)
+	// if err != nil {
+	// 	c.JSON(500, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	
+	c.JSON(200, gin.H{"user": "user"})
 }

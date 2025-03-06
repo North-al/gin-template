@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"net/http"
-
+	
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,19 +22,15 @@ func Success(c *gin.Context, data any, message ...string) {
 	} else {
 		resp.Message = "success"
 	}
-
+	
 	c.JSON(http.StatusOK, resp)
 }
 
-func Fail(c *gin.Context, data any, message ...string) {
+func Fail(c *gin.Context, message string) {
 	var resp = new(Response)
 	resp.Code = http.StatusBadRequest
-	resp.Data = data
-	if len(message) > 0 {
-		resp.Message = message[0]
-	} else {
-		resp.Message = "fail"
-	}
+	resp.Data = nil
+	resp.Message = message
 	c.JSON(http.StatusOK, resp)
 }
 
@@ -47,6 +43,6 @@ func FailWithCode(c *gin.Context, code int, message string, data ...any) {
 	resp.Code = code
 	resp.Message = message
 	resp.Data = data
-
+	
 	c.JSON(http.StatusOK, resp)
 }
