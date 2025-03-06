@@ -1,6 +1,7 @@
 package config
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -19,10 +20,12 @@ type Config struct {
 	Database    Database    `yaml:"database"`
 	Redis       Redis       `yaml:"redis"`
 	JWT         JWT         `yaml:"jwt"`
+	Docs        Docs        `yaml:"docs"`
 }
 
 type Application struct {
-	Port int `yaml:"port"`
+	Name string `yaml:"name"`
+	Port int    `yaml:"port"`
 }
 
 type Database struct {
@@ -45,6 +48,11 @@ type JWT struct {
 	Expire int    `yaml:"expire"`
 }
 
+type Docs struct {
+	Host string `yaml:"host"`
+	Path string `yaml:"path"`
+}
+
 func initConfig() {
 	env := GetEnv()
 
@@ -60,17 +68,14 @@ func initConfig() {
 		fmt.Println("Failed to unmarshal config file:", err)
 		panic(fmt.Sprintf("Failed to unmarshal config file: %v", err))
 	}
-
-	fmt.Println("Config:", config)
 }
 
 func GetEnv() string {
-	go_env := os.Getenv("GO_ENV")
-	if len(go_env) > 0 {
-		return go_env
-	}
+	// 解析命令行参数
+	env := flag.String("env", "dev", "set environment (dev, prod, test)")
+	flag.Parse()
 
-	return "dev"
+	return *env
 }
 
 func GetConfig() *Config {
